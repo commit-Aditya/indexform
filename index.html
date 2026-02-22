@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Responsive Inquiry Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #65a7ed, #00c6ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 15px;
+        }
+
+        .container {
+            background: rgb(162, 239, 255);
+            padding: 25px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 10px 25px rgba(13, 2, 2, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .section {
+            margin-bottom: 18px;
+        }
+
+        .section strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        label {
+            background: #f4f4f4;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+
+        label:hover {
+            background: #e0f0ff;
+        }
+
+        input {
+            margin-right: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .output {
+            margin-top: 20px;
+            padding: 12px;
+            background: #e9f5ff;
+            border-radius: 8px;
+            display: none;
+            font-size: 14px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 480px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            button {
+                font-size: 14px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Inquiry Form</h2>
+
+    <!-- Name -->
+    <div class="section">
+        <strong>Select Name:</strong>
+        <div class="options">
+            <label><input type="radio" name="name" value="Aditya"> A) Aditya</label>
+            <label><input type="radio" name="name" value="Suraj"> B) Suraj</label>
+            <label><input type="radio" name="name" value="Shubham"> C) Shubham</label>
+            <label><input type="radio" name="name" value="Sugam"> D) Sugam</label>
+        </div>
+    </div>
+
+    <!-- Work -->
+    <div class="section">
+        <strong>Select Work:</strong>
+        <div class="options">
+            <label><input type="radio" name="work" value="Student"> A) Student</label>
+            <label><input type="radio" name="work" value="Developer"> B) Developer</label>
+            <label><input type="radio" name="work" value="Designer"> C) Designer</label>
+            <label><input type="radio" name="work" value="Business"> D) Business</label>
+        </div>
+    </div>
+
+    <!-- Native -->
+    <div class="section">
+        <strong>Native Place:</strong>
+        <div class="options">
+            <label><input type="radio" name="native" value="Delhi"> A) Delhi</label>
+            <label><input type="radio" name="native" value="Mumbai"> B) Mumbai</label>
+            <label><input type="radio" name="native" value="Jaipur"> C) Jaipur</label>
+            <label><input type="radio" name="native" value="Lucknow"> D) Lucknow</label>
+        </div>
+    </div>
+
+    <!-- Living -->
+    <div class="section">
+        <strong>Currently Living:</strong>
+        <div class="options">
+            <label><input type="radio" name="living" value="Delhi"> A) Delhi</label>
+            <label><input type="radio" name="living" value="Noida"> B) Noida</label>
+            <label><input type="radio" name="living" value="Pune"> C) Pune</label>
+            <label><input type="radio" name="living" value="Bangalore"> D) Bangalore</label>
+        </div>
+    </div>
+
+    <!-- Objective -->
+    <div class="section">
+        <strong>Select Objective:</strong>
+        <div class="options">
+            <label><input type="checkbox" value="Get Job"> Get Job</label>
+            <label><input type="checkbox" value="Improve Skills"> Improve Skills</label>
+            <label><input type="checkbox" value="Start Business"> Start Business</label>
+            <label><input type="checkbox" value="Higher Studies"> Higher Studies</label>
+        </div>
+    </div>
+
+    <button onclick="showData()">Submit</button>
+
+    <div class="output" id="result"></div>
+</div>
+
+<script>
+function getSelectedValue(name) {
+    let options = document.getElementsByName(name);
+    for (let option of options) {
+        if (option.checked) {
+            return option.value;
+        }
+    }
+    return null;
+}
+
+function showData() {
+    let name = getSelectedValue("name");
+    let work = getSelectedValue("work");
+    let native = getSelectedValue("native");
+    let living = getSelectedValue("living");
+
+    let objectives = [];
+    let checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+    checkboxes.forEach(box => {
+        objectives.push(box.value);
+    });
+
+    if (!name || !work || !native || !living || objectives.length === 0) {
+        alert("Please select all options!");
+        return;
+    }
+
+    let result = document.getElementById("result");
+    result.style.display = "block";
+    result.innerHTML = `
+        <strong>Inquiry Details:</strong><br>
+        Name: ${name}<br>
+        Work: ${work}<br>
+        Native Place: ${native}<br>
+        Currently Living: ${living}<br><br>
+        <strong>Objectives:</strong><br>
+        ${objectives.join("<br>")}
+    `;
+}
+</script>
+
+</body>
+</html>
